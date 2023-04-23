@@ -14,3 +14,9 @@ node_modules
 
 # .DS_Store is only for Mac users
 **/.DS_Store
+
+# add the README.md file to the "ignore" list (will not display on github)
+README.md
+
+# add the pnpm-lock.yaml to the "ignore" list.
+pnpm-lock.yaml

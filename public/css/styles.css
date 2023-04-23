@@ -1,6 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Roboto:wght@300&family=Rubik&display=swap');
+
 /******* Change Box Model ***************/
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+* {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+h1, h2, h3, h4 {
+  font-family: Rubik, Arial, 'Times New Roman';
+}
+
+h1 {
+  font-size: 200%;
+}
+
+p, a {
+  font-family: Roboto, Helvetica, sans-serif;
+}
+
+/*Header Styles*/
+#top-header {
+  width: auto;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.siteName a, #tools a {
+  text-decoration: none;
+}
+
+#tools {
+  justify-self: end;
+}
+
+.siteName a {
+  color: #102542;
+  font-size: 250%;
+  font-weight: bold;
+}
+
+#tools a {
+  color: black;
+}
+
+/*Navigation*/
+#primary-nav ul {
+  display: flex;
+  list-style-type: none;
+  justify-content: space-around;
+  background-color: #102542;
+  padding: 0;
+}
+
+#primary-nav a {
+  display: block;
+  box-sizing: border-box;
+  text-decoration: none;
+  background-color: #102542;
+  color: white;
+  padding: 15px;
+  width: 100%;
+}
+
+#primary-nav a:hover {
+  background-color: white;
+  color: black;
+}
+
+/*Home Styles*/
+#home-grid h1, #home-grid h2{
+  margin-left: 5px;
+}
+
+.description {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 180px;
+  left: 15px;
+  top: 15px;
+}
+
+.description p, .description h2 {
+  margin: 3px;
+}
+
+.car-profile .description img {
+  width: 120px;
+}
+
+.car-profile {
+  position: relative;
+}
+
+.car-profile img {
+  width: 100%;
+}
+
+.reviews li {
+  margin: 10px 0;
+  margin-left: -15px;
+}
+
+/*Upgrade Grid*/
+#upgrade-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.upgrade {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.upgrade img {
+  width: 80px;
+}
+
+.img-wrapper {
+  display: flex;
+  background-color: #5d8ee1;
+  border: solid 1px black;
+  justify-content: center;
+  align-items: center;
+  width: 230px;
+  height: 120px;
+}
+
+/*Footer Styles*/
+footer {
+  margin-left: 10px;
 }
