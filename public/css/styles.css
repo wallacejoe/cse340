@@ -75,8 +75,8 @@ p, a {
 }
 
 /*Home Styles*/
-#home-grid h1, #home-grid h2{
-  margin-left: 5px;
+#home-grid h1 {
+  margin-left: 15px;
 }
 
 .description {
@@ -103,12 +103,20 @@ p, a {
   width: 100%;
 }
 
+#reviews-position h2 {
+  margin-left: 10px;
+}
+
 .reviews li {
   margin: 10px 0;
   margin-left: -15px;
 }
 
 /*Upgrade Grid*/
+#upgrades-position h2 {
+  margin-left: 10px;
+}
+
 #upgrade-grid {
   display: grid;
   grid-template-columns: auto auto;
@@ -123,7 +131,7 @@ p, a {
 }
 
 .upgrade img {
-  width: 80px;
+  width: 3.5em;
 }
 
 .img-wrapper {
@@ -132,8 +140,58 @@ p, a {
   border: solid 1px black;
   justify-content: center;
   align-items: center;
-  width: 230px;
-  height: 120px;
+  width: 10em;
+  height: 5em;
+}
+
+/*SQL based, inventory displays*/
+#inv-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 215.8px));
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#inv-display li {
+  display: flex;
+  flex-direction: column;
+  border: solid 3px #5d8ee1;
+  border-radius: 15px;
+  margin: 5px;
+  align-items: center;
+}
+
+#inv-display li img {
+  border-radius: 12px;
+}
+
+.namePrice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.namePrice hr {
+  width: 100%;
+}
+
+.namePrice a {
+  text-decoration: none;
+  font-size: 0.7em;
+  color: black;
+  background-color: #5d8ee1;
+  padding: 0.2em;
+  border-radius: 8px;
+  margin-top: -20px;
+}
+
+.namePrice a:hover {
+  background-color: #102542;
+  color: white;
 }
 
 /*Footer Styles*/
