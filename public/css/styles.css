@@ -180,13 +180,15 @@ p, a {
 }
 
 .namePrice a {
+  display: block;
+  text-align: center;
   text-decoration: none;
   font-size: 0.7em;
   color: black;
   background-color: #5d8ee1;
   padding: 0.2em;
   border-radius: 8px;
-  margin-top: -20px;
+  margin: -20px 5px 0 5px;
 }
 
 .namePrice a:hover {
