@@ -17,6 +17,7 @@ h1, h2, h3, h4 {
 
 h1 {
   font-size: 200%;
+  margin-left: 0.5em;
 }
 
 p, a {
@@ -75,10 +76,6 @@ p, a {
 }
 
 /*Home Styles*/
-#home-grid h1 {
-  margin-left: 15px;
-}
-
 .description {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.5);
@@ -194,6 +191,40 @@ p, a {
 .namePrice a:hover {
   background-color: #102542;
   color: white;
+}
+
+/*SQL based, vehicle details*/
+#details-display {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  margin: 0 1em;
+  padding: 0;
+}
+
+#details-display img {
+  width: 100%;
+}
+
+.vehicle-details {
+  margin-left: 1em;
+}
+
+.vehicle-details p {
+  padding: 0.5em;
+}
+
+.vehicle-price {
+  font-weight: bold;
+  background-color: #d2d5d8;
+}
+
+.vehicle-color {
+  background-color: #d2d5d8;
+}
+
+.bolder {
+  font-weight: bold;
 }
 
 /*Footer Styles*/
