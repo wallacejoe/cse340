@@ -227,7 +227,13 @@ p, a {
   font-weight: bold;
 }
 
+/*Error Styles*/
+.error-message {
+  margin-left: 15px;
+}
+
 /*Footer Styles*/
 footer {
   margin-left: 10px;
+  margin-bottom: 10px;
 }
