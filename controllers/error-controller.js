@@ -7,7 +7,7 @@ const errorCont = {};
  * ************************** */
 errorCont.buildError = async function (req, res, next) {
   const grid = await utilities.buildError();
-  let nav = await utilities.getNav();
+  //let nav = await utilities.getNav();
   const className = "Error Page";
   res.render("./inventory/error", {
     title: className,
