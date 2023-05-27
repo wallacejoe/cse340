@@ -93,7 +93,7 @@ Util.buildInventoryGrid = async function(data){
 /* **************************************
 * Build the specified classification view HTML
 * ************************************ */
-Util.buildInventoryGrid = async function(data){
+Util.buildError = async function(data){
   let grid
   grid = '<h1> Hello World <h1>'
   return grid
