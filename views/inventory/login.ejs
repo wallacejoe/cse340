@@ -1,0 +1,22 @@
+<!--Content Heading-->
+<% if (title) { %>
+    <div id="login-grid">
+        <h1><%= title %></h1>
+        <form>
+            <fieldset>
+                <legend>Applicant Information</legend>
+                <!--Character pattern/title: pattern=".[A-Za-z\- ]{7,}" title="Seven or more characters. Alphabet/hyphen/spaces."-->
+                <label class="top">Email:<input type="email" name="email" placeholder="someone@gmail.com" required></label>
+                <label class="top">Password:<input type="password" name="Password" required></label>
+           
+                <input class="submitBtn" type="submit" name="submitf" value="LOGIN">
+                <p>No account? <a href="#">Sign-up</a></p>
+            </fieldset>
+        </form>
+    </div>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<!--Displays messages in the view-->
+<%- messages() %>
