@@ -232,8 +232,13 @@ p, a {
   margin-left: 15px;
 }
 
+/*Notice (message) Styles*/
+.notice {
+  color: red;
+}
+
 /*Login Styles*/
-#login-grid {
+#login-grid, #register-grid{
   display: flex;
   flex-direction: column;
   align-items: center;

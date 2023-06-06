@@ -7,6 +7,7 @@ const utilities = require("../utilities/")
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 // Route to build inventory by inventory id
 router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildByInventoryId));
-//invController was previously "inv-controller", however this caused an error
+// Route to build management view
+//router.get("/", utilities.handleErrors(invController.buildManagementView))
 
 module.exports = router;
