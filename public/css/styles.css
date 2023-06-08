@@ -315,6 +315,15 @@ form label.top input:required:valid{
   border-left: green solid 6px;
 }
 
+/*Management Styles*/
+#management-grid {
+  display: block;
+}
+
+#management-grid p {
+  margin-left: 2.5em;
+}
+
 /*Footer Styles*/
 footer {
   margin-left: 10px;

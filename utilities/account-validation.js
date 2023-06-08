@@ -69,14 +69,14 @@ validate.loginRules = () => {
         throw new Error("Email doesn't exist. Please register or log in with a different email.")
       }*/
       // password must match a password in the database, and the related email
-      body("account_password", "account_email")
+      /*body("account_password", "account_email")
       .custom(async (account_password, account_email) => {
         const passwordExists = await accountModel.checkExistingPassword(account_password, account_email)
         if (!passwordExists){
           throw new Error("The password or email is incorrect.")
         }
       })
-      .withMessage("The password or email is invalid."),
+      .withMessage("The password or email is invalid."),*/
     ]
   }
 

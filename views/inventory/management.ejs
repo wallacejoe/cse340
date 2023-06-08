@@ -1,10 +1,12 @@
 <!--Content Heading-->
 <% if (title) { %>
-    <h1><%= title %></h1>
+    <div id="management-grid">
+        <h1><%= title %></h1>
         <!--Displays messages in the view-->
         <%- messages() %>
-        <a href="">Add new classification</a>
-        <a href="">Add new inventory</a>
+        <p><a href="/inv/addClassification">Add new classification</a></p>
+        <p><a href="/inv/addVehicle">Add new inventory</a></p>
+    </div>
     <% } else {
       res.redirect('/')
     } %>
