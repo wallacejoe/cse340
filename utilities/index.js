@@ -90,6 +90,15 @@ Util.buildInventoryGrid = async function(data){
   return grid
 }
 
+Util.buildInventoryOptions = async function(){
+  let data = await invModel.getClassifications()
+  let options
+  data.rows.forEach(classification => { 
+    options += "<option value=\"" + classification.classification_id + "\">" + classification.classification_name + "</option>"
+  })
+  return options
+}
+
 /* **************************************
 * Build the specified classification view HTML
 * ************************************ */

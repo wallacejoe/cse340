@@ -17,6 +17,15 @@ router.post(
     '/addClassification',
     invValidate.addClassificationRules(),
     invValidate.checkClassData,
-    utilities.handleErrors(invController.addClassificationName))
+    utilities.handleErrors(invController.addClassificationName));
+
+router.get("/addInventory", utilities.handleErrors(invController.buildAddInventoryView));
+
+router.post(
+    '/addInventory',
+    invValidate.addInventoryRules(),
+    invValidate.checkInventoryData,
+    utilities.handleErrors(invController.addInventoryVehicle)
+)
 
 module.exports = router;

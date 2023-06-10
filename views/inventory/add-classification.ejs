@@ -1,6 +1,6 @@
 <!--Content Heading-->
 <% if (title) { %>
-    <div id="register-grid">
+    <div id="add-inventory-grid">
         <h1><%= title %></h1>
         <%- messages() %>
         <% if (errors) { %>
@@ -15,7 +15,7 @@
                 <legend>Classification Name</legend>
                 <p>Field is required.</p>
                 <p>Name must be alphabetical character only.</p>
-                <label class="top">Name:<input type="text" name="classification_name" pattern="[a-zA-Z]+" required></label>
+                <label class="top">Name:<input type="text" name="classification_name" pattern="[a-zA-Z]+" required value="<%= locals.classification_name %>"></label>
                 <input class="submitBtn" type="submit" name="submitf" value="Add Classification">
             </fieldset>
         </form>

@@ -238,7 +238,7 @@ p, a {
 }
 
 /*Login Styles*/
-#login-grid, #register-grid{
+#login-grid, #register-grid, #add-classification-grid, #add-inventory-grid{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -271,7 +271,7 @@ form legend {
   padding: 0 .5rem;
 }
 
-form label.top {
+form label.top, form label.top select {
   display: block;
   width: 90%;
   padding-top: 1rem;
@@ -279,7 +279,7 @@ form label.top {
   font-size: .8rem;
 }
 
-form label.top input, form label.top select {
+form label.top input, form label.top select, form label.description textarea {
   -webkit-appearance: none;
   display: block;
   font-size: 1rem;
@@ -289,6 +289,20 @@ form label.top input, form label.top select {
   color: #555;
   width: 100%;
   background-color: rgba(0,0,0,0.1);
+}
+
+form label.description textarea {
+  display: block;
+  padding: .75rem 10px;
+  width: 100%;
+}
+
+form label.description {
+  position: inherit;
+  display: block;
+  width: 90%;
+  padding-top: 1rem;
+  font-size: .8rem;
 }
 
 form input.submitBtn {
@@ -307,11 +321,11 @@ form input.submitBtn:hover {
   color: black;
 }
 
-form label.top input:required {
+form label.top input:required, form label.description textarea:required {
   border-left: red solid 6px;
 }
 
-form label.top input:required:valid{
+form label.top input:required:valid, form label.description textarea:required:valid{
   border-left: green solid 6px;
 }
 
