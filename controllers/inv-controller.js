@@ -52,9 +52,8 @@ invCont.buildManagementView = async function (req, res, next) {
  * ************************** */
 invCont.buildAddClassificationView = async function (req, res, next) {
   let nav = await utilities.getNav()
-  const className = "Add Classification"
   res.render("./inventory/add-classification", {
-    title: className,
+    title: "Add Classification",
     nav,
     errors: null,
   })
@@ -94,7 +93,7 @@ invCont.addClassificationName = async function (req, res) {
  * ************************** */
 invCont.buildAddInventoryView = async function (req, res, next) {
   let nav = await utilities.getNav()
-  const options = await utilities.buildInventoryOptions()
+  let options = await utilities.buildInventoryOptions()
   res.render("./inventory/add-inventory", {
     title: "Add Vehicle",
     nav,
@@ -112,9 +111,7 @@ invCont.addInventoryVehicle = async function (req, res) {
 
   // Rebuilds the nav bar
   let nav = await utilities.getNav()
-  const options = await utilities.buildInventoryOptions()
   if (invResult) {
-
     req.flash(
       "notice",
       `Successfully added ${inv_make} ${inv_model}.`
@@ -122,14 +119,15 @@ invCont.addInventoryVehicle = async function (req, res) {
     res.status(201).render("./inventory/management", {
       title: "Vehicle Management",
       nav,
-      errors: null,
     })
   } else {
+    let options = await utilities.buildInventoryOptions()
     req.flash("notice", "Sorry, the vehicle creation failed.")
     res.status(501).render("./inventory/add-inventory", {
       title: "Add Vehicle",
       nav,
       options,
+      errors
     })
   }
 }

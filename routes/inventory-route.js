@@ -25,7 +25,6 @@ router.post(
     '/addInventory',
     invValidate.addInventoryRules(),
     invValidate.checkInventoryData,
-    utilities.handleErrors(invController.addInventoryVehicle)
-)
+    utilities.handleErrors(invController.addInventoryVehicle))
 
 module.exports = router;
