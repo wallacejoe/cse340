@@ -43,12 +43,10 @@ validate.addInventoryRules = () => {
             .withMessage("Please provide a valid thumbnail."),
         body("inv_price")
             .trim()
-            .toFloat()
             .isFloat({ min: 0.01, })
             .withMessage("Please provide the price."),
         body("inv_year")
             .trim()
-            .toInt()
             .isInt({
                 min: 1000,
                 max: 5000
