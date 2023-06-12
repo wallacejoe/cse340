@@ -11,6 +11,7 @@ validate.addClassificationRules = () => {
       // class name is required and must be a string
       body("classification_name")
         .trim()
+        .isAlpha()
         .isLength({  min: 1, })
         .withMessage("Please provide a class name."),
     ]
@@ -23,27 +24,45 @@ validate.addInventoryRules = () => {
     return [
         body("inv_make")
             .trim()
-            .isLength({ min: 3, })
+            .isLength({
+                min: 3,
+                max: 100,
+            })
             .withMessage("Please provide the make."),
         body("inv_model")
             .trim()
-            .isLength({ min: 3, })
+            .isLength({
+                min: 3,
+                max: 100,
+            })
             .withMessage("Please provide the model."),
         body("inv_description")
             .trim()
-            .isLength({ min: 1, })
+            .isLength({
+                min: 1,
+                max: 100,
+            })
             .withMessage("Please provide a description."),
         body("inv_image")
             .trim()
-            .isLength({ min: 1, })
+            .isLength({
+                min: 1,
+                max: 100,
+            })
             .withMessage("Please provide a valid image path."),
         body("inv_thumbnail")
             .trim()
-            .isLength({ min: 1, })
+            .isLength({
+                min: 1,
+                max: 100,
+            })
             .withMessage("Please provide a valid thumbnail."),
         body("inv_price")
             .trim()
-            .isFloat({ min: 0.01, })
+            .isFloat({
+                min: 0.01,
+                max: 10000000,
+            })
             .withMessage("Please provide the price."),
         body("inv_year")
             .trim()
@@ -56,13 +75,14 @@ validate.addInventoryRules = () => {
             .trim()
             .isNumeric({
                 min: 0,
-                max: 100000
+                max: 10000000
             })
             .withMessage("Please provide total miles."),
         body("inv_color")
             .trim()
             .isLength({
-                min: 1,})
+                min: 1,
+                max: 100,})
             .withMessage("Please provide the color."),
         body("classification_id")
             .trim()
