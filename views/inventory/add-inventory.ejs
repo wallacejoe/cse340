@@ -14,9 +14,9 @@
             <fieldset>
                 <p>All fields are required.</p>
                 <legend>Add Vehicle</legend>
-                <label class="top">Select Classification:<select type="class" name="classification_id" required value="<%= locals.classification_id %>">
+                <label class="top">Select Classification:<!--<select type="class" name="classification_id" required">-->
                     <%- options %>
-                </select></label>
+                <!--</select>--></label>
                 <label class="top">Make:<input type="text" name="inv_make" pattern=".{3,}$" required value="<%= locals.inv_make %>"></label>
                 <label class="top">Model:<input type="text" name="inv_model" pattern=".{3,}$" required value="<%= locals.inv_model %>"></label>
                 <label class="description">Description:<textarea type="text" name="inv_description" required value="<%= locals.inv_description %>"><%= locals.inv_description %></textarea></label>
