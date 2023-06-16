@@ -92,12 +92,14 @@ Util.buildInventoryGrid = async function(data){
   return grid
 }
 
-Util.buildInventoryOptions = async function(){
+Util.buildInventoryOptions = async function(selectedOption){
   let data = await invModel.getClassifications()
   let options = "<select id=\"classificationList\" name=\"classification_id\">"
   options += "<option value=\"#\">Select a Classification</option>"
   data.rows.forEach(classification => { 
-    options += "<option value=\"" + classification.classification_id + "\">" + classification.classification_name + "</option>"
+    options += `<option value="${classification.classification_id}"
+    ${classification.classification_id === Number(selectedOption)? "selected":""}>
+    ${classification.classification_name}</option>`
   })
   options += "</select>"
   return options

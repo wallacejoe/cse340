@@ -22,6 +22,10 @@ validate.addClassificationRules = () => {
  * ********************************* */
 validate.addInventoryRules = () => {
     return [
+        body("classification_id")
+            .trim()
+            .isInt()
+            .withMessage("Please select a class."),
         body("inv_make")
             .trim()
             .isLength({
@@ -84,10 +88,6 @@ validate.addInventoryRules = () => {
                 min: 1,
                 max: 100,})
             .withMessage("Please provide the color."),
-        body("classification_id")
-            .trim()
-            .isNumeric()
-            .withMessage("The code broke.")
     ]
   }
 
@@ -112,14 +112,14 @@ validate.checkClassData = async (req, res, next) => {
   }
 
 /* ******************************
- * Check data and return errors or continue to add classification
+ * Check data and return errors or continue to add inventory
  * ***************************** */
 validate.checkInventoryData = async (req, res, next) => {
     const { classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body
     let errors = validationResult(req)
     let errorsArray = []
     
-    let options = await utilities.buildInventoryOptions()
+    let options = await utilities.buildInventoryOptions(classification_id)
     if (!errors.isEmpty()) {
         errorsArray = errors.array();
     }
@@ -143,6 +143,44 @@ validate.checkInventoryData = async (req, res, next) => {
             inv_color,
             classification_id,
             options,
+        })
+    }
+  }
+
+/* ******************************
+ * Check data and return errors or continue to edit inventory
+ * ***************************** */
+validate.checkUpdateData = async (req, res, next) => {
+    const { classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, inv_id } = req.body
+    let errors = validationResult(req)
+    let errorsArray = []
+    
+    let options = await utilities.buildInventoryOptions(classification_id)
+    if (!errors.isEmpty()) {
+        errorsArray = errors.array();
+    }
+
+    if (errorsArray.length === 0) {
+        next();
+    } else {
+        let nav = await utilities.getNav()
+        const name = `${inv_make} ${inv_model}`
+        res.render("./inventory/edit-inventory", {
+            errors,
+            title: "Edit " + name,
+            nav,
+            options,
+            classification_id,
+            inv_make,
+            inv_model,
+            inv_description,
+            inv_image,
+            inv_thumbnail,
+            inv_price,
+            inv_year,
+            inv_miles,
+            inv_color,
+            inv_id,
         })
     }
   }

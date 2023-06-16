@@ -238,21 +238,13 @@ p, a {
 }
 
 /*Login Styles*/
-#login-grid, #register-grid, #add-classification-grid, #add-inventory-grid{
+#login-grid, #register-grid, #add-classification-grid, #add-inventory-grid, #edit-inventory-grid{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: start;
-  width: 100%;
-}
-
-form fieldset {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -263,12 +255,6 @@ form fieldset {
   border: 1px solid #102542;
   border-radius: 10px;
   padding: .5rem 2%;
-}
-
-form legend {
-  color: #102542;
-  margin: 0 1rem;
-  padding: 0 .5rem;
 }
 
 form label.top, form label.top select {
@@ -334,7 +320,15 @@ form label.top input:required:valid, form label.description textarea:required:va
   display: block;
 }
 
-#management-grid p {
+#management-grid p, #management-grid select, #management-grid noscript {
+  margin-left: 2.5em;
+}
+
+#management-grid h2 {
+  margin-left: 1em;
+}
+
+#inventoryDisplay {
   margin-left: 2.5em;
 }
 
