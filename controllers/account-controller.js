@@ -117,4 +117,12 @@ async function accountLogin(req, res) {
   }
  }
 
-  module.exports = { buildLogin, buildRegister, buildAccount, registerAccount, accountLogin }
+/* ****************************************
+ * Logs the user out of there account and returns them to the home page
+ **************************************** */
+async function logoutOfAccount(req, res){
+  res.clearCookie("jwt")
+  res.redirect("/")
+}
+
+  module.exports = { logoutOfAccount, buildLogin, buildRegister, buildAccount, registerAccount, accountLogin }

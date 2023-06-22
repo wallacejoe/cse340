@@ -76,11 +76,7 @@ invCont.addClassificationName = async function (req, res) {
       "notice",
       `Successfully added ${classification_name}.`
     )
-    res.status(201).render("./inventory/management", {
-      title: "Vehicle Management",
-      nav,
-      errors: null,
-    })
+    res.redirect("/inv/")
   } else {
     req.flash("notice", "Sorry, the class creation failed.")
     res.status(501).render("./inventory/add-classification", {
@@ -118,10 +114,7 @@ invCont.addInventoryVehicle = async function (req, res) {
       "notice",
       `Successfully added ${inv_make} ${inv_model}.`
     )
-    res.status(201).render("./inventory/management", {
-      title: "Vehicle Management",
-      nav,
-    })
+    res.redirect("/inv/")
   } else {
     const options = await utilities.buildInventoryOptions(classification_id)
     req.flash("notice", "Sorry, the vehicle creation failed.")
@@ -129,7 +122,7 @@ invCont.addInventoryVehicle = async function (req, res) {
       title: "Add Vehicle",
       nav,
       options,
-      errors
+      errors: null,
     })
   }
 }
@@ -213,5 +206,58 @@ invCont.editInventoryVehicle = async function (req, res) {
     })
   }
 }
+
+/* ***************************
+ *  Build delete-inventory view
+ * ************************** */
+invCont.buildDeleteInventoryView = async (req, res, next) => {
+  const inventory_id = parseInt(req.params.inv_id)
+  let nav = await utilities.getNav()
+  const data = await invModel.getVehiclesByInventoryId(inventory_id)
+  const name = `${data[0].inv_make} ${data[0].inv_model}`
+  res.render("./inventory/delete-confirm", {
+    title: "Delete " + name,
+    nav,
+    errors: null,
+    inv_id: data[0].inv_id,
+    inv_make: data[0].inv_make,
+    inv_model: data[0].inv_model,
+    inv_year: data[0].inv_year,
+    inv_price: data[0].inv_price,
+  })
+}
+
+/* ****************************************
+*  Delete Inventory Data
+* *************************************** */
+invCont.deleteInventoryVehicle = async function (req, res) {
+  //const inv_id = parseInt(req.params.inv_id) Incorrect inv_id inclusion
+  const { inv_make, inv_model, inv_year, inv_price, inv_id } = req.body
+  const deleteResult = await invModel.deleteInventory(inv_id)
+
+  // Rebuilds the nav bar
+  let nav = await utilities.getNav()
+  const name = `${inv_make} ${inv_model}`
+  if (deleteResult) {
+    req.flash(
+      "notice",
+      `Successfully deleted ${inv_make} ${inv_model}.`
+    )
+    res.redirect("/inv/")
+  } else {
+    req.flash("notice", "Sorry, the deletion failed.")
+    res.status(501).render("./inventory/delete-confirm", {
+      title: "Delete " + name,
+      nav,
+      errors: null,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_price,
+    })
+  }
+}
+
 
 module.exports = invCont

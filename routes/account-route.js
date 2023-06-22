@@ -4,6 +4,7 @@ const router = new express.Router()
 const accountController = require("../controllers/account-controller")
 const utilities = require("../utilities/")
 const regValidate = require('../utilities/account-validation')
+const baseController = require("../controllers/base-controller")
 
 // Default route for accounts
 router.get(
@@ -27,5 +28,7 @@ router.post(
     regValidate.checkLogData,
     utilities.handleErrors(accountController.accountLogin)
   )
+// Route to logout of account
+router.get("/logout", utilities.handleErrors(accountController.logoutOfAccount))
 
 module.exports = router;

@@ -199,6 +199,26 @@ Util.buildError = async function(data){
   return grid
 }
 
+/* **************************************
+* Provides user authentification
+* *********************************** */
+Util.checkAccountType = (req, res, next) => {
+  if (res.locals.loggedin && res.locals.accountData) {
+    const accountType = res.locals.accountData.account_type;
+    if (accountType == "Employee" || accountType == "Admin") {
+      next()
+    } else {
+      const error = new Error("Access denied")
+      error.status = 403
+      next(error)
+    }
+  } else {
+    const error = new Error("Not authenticated")
+    error.status = 401
+    next(error)
+  }
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
