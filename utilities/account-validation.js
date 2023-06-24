@@ -63,23 +63,73 @@ validate.loginRules = () => {
             throw new Error("Email doesn't exist. Please register or log in with a different email.")
         }
       }),
-
-      /*if (!emailExists){
-        throw new Error("Email doesn't exist. Please register or log in with a different email.")
-      }*/
-      // password must match a password in the database, and the related email
-      /*body("account_password", "account_email")
-      .custom(async (account_password, account_email) => {
-        const passwordExists = await accountModel.checkExistingPassword(account_password, account_email)
-        if (!passwordExists){
-          throw new Error("The password or email is incorrect.")
-        }
-      })
-      .withMessage("The password or email is invalid."),*/
     ]
   }
 
- /* ******************************
+/*  **********************************
+ *  Edit Account Data Validation Rules
+ * ********************************* */
+validate.editAccountRules = () => {
+  if ( utilities.checkEmailChange() ) {
+    return [
+      body("account_id")
+        .trim()
+        .isInt()
+        .withMessage("Account id is not an integer."),
+      // firstname is required and must be string
+      body("account_firstname")
+        .trim()
+        .isLength({ min: 1 })
+        .withMessage("Please provide a first name."), // on error this message is sent.
+  
+      // lastname is required and must be string
+      body("account_lastname")
+        .trim()
+        .isLength({ min: 2 })
+        .withMessage("Please provide a last name."), // on error this message is sent.
+      
+      // valid email is required
+      body("account_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail() // refer to validator.js docs
+      .withMessage("A valid email is required.")
+    ]
+  } else {
+    return [
+      body("account_id")
+        .trim()
+        .isInt()
+        .withMessage("Account id is not an integer."),
+      // firstname is required and must be string
+      body("account_firstname")
+        .trim()
+        .isLength({ min: 1 })
+        .withMessage("Please provide a first name."), // on error this message is sent.
+
+      // lastname is required and must be string
+      body("account_lastname")
+        .trim()
+        .isLength({ min: 2 })
+        .withMessage("Please provide a last name."), // on error this message is sent.
+
+      // valid email is required and cannot already exist in the DB
+      body("account_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail() // refer to validator.js docs
+      .withMessage("A valid email is required.")
+      .custom(async (account_email) => {
+        const emailExists = await accountModel.checkExistingEmail(account_email)
+        if (emailExists){
+            throw new Error("Email exists. Please log in or use a different email.")
+        }
+      }),
+    ]
+  }
+}
+
+/* ******************************
  * Check data and return errors or continue to registration
  * ***************************** */
 validate.checkRegData = async (req, res, next) => {
@@ -119,4 +169,27 @@ validate.checkLogData = async (req, res, next) => {
   next()
 }
   
-  module.exports = validate
+ /* ******************************
+ * Check data and return errors or continue to registration
+ * ***************************** */
+ validate.checkEditData = async (req, res, next) => {
+  const { account_firstname, account_lastname, account_email, account_id } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("account/edit-account", {
+      errors,
+      title: "Edit Account",
+      nav,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_id
+    })
+    return
+  }
+  next()
+}
+
+module.exports = validate

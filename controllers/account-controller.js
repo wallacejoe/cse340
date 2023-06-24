@@ -42,6 +42,23 @@ async function buildAccount(req, res, next) {
 }
 
 /* ****************************************
+*  Deliver edit-account view
+* *************************************** */
+async function buildEditAccount(req, res, next) {
+  const data = res.locals.accountData
+  let nav = await utilities.getNav()
+  res.render("./account/edit-account", {
+      title: "Edit Account",
+      nav,
+      account_firstname: data.account_firstname,
+      account_lastname: data.account_lastname,
+      account_email: data.account_email,
+      account_id: data.account_id,
+      errors: null,
+  })
+}
+
+/* ****************************************
 *  Process Registration
 * *************************************** */
 async function registerAccount(req, res) {
@@ -118,6 +135,47 @@ async function accountLogin(req, res) {
  }
 
 /* ****************************************
+ *  Update Account Information
+ * ************************************ */
+async function updateAccount(req, res) {
+  const { account_firstname, account_lastname, account_email, account_id } = req.body
+  const updateResult = await accountModel.updateAccount(account_firstname, account_lastname, account_email, account_id)
+
+  // Rebuilds the cookie data
+  const accountData = await accountModel.getAccountByEmail(account_email)
+  const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+  res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+
+  // Rebuilds the nav bar
+  let nav = await utilities.getNav()
+  if (updateResult) {
+    req.flash(
+      "notice",
+      `Successfully updated your information.`
+    )
+    res.redirect("/inv/")
+  } else {
+    req.flash("notice", "Sorry, the update failed.")
+    res.status(501).render("./account/edit-account", {
+      title: "Edit Account",
+      nav,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_id,
+      errors: null,
+    })
+  }
+}
+
+/* ****************************************
+ *  Update Account Password
+ * ************************************ */
+async function updatePassword(req, res) {
+  let nav = await utilities.getNav()
+ }
+
+/* ****************************************
  * Logs the user out of there account and returns them to the home page
  **************************************** */
 async function logoutOfAccount(req, res){
@@ -125,4 +183,4 @@ async function logoutOfAccount(req, res){
   res.redirect("/")
 }
 
-  module.exports = { logoutOfAccount, buildLogin, buildRegister, buildAccount, registerAccount, accountLogin }
+  module.exports = { logoutOfAccount, buildLogin, buildRegister, buildAccount, registerAccount, accountLogin, buildEditAccount, updateAccount, updatePassword }

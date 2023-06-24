@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const accountModel = require("../models/account-model")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 const Util = {}
@@ -217,6 +218,11 @@ Util.checkAccountType = (req, res, next) => {
     error.status = 401
     next(error)
   }
+}
+
+Util.checkEmailChange = async (account_email, account_id) => {
+  const emailExists = await accountModel.checkNewEmail(account_email, account_id)
+  return emailExists
 }
 
 /* ****************************************

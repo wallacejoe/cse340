@@ -28,6 +28,26 @@ router.post(
     regValidate.checkLogData,
     utilities.handleErrors(accountController.accountLogin)
   )
+// Route to build edit-account view
+router.get(
+    "/edit-account",
+    utilities.checkLogin,
+    utilities.handleErrors(accountController.buildEditAccount)
+  )
+// Process update attempt
+router.post(
+  "/update",
+  regValidate.editAccountRules(),
+  regValidate.checkEditData,
+  utilities.handleErrors(accountController.updateAccount)
+)
+// Process update password attempt
+router.post(
+  "/update/password",
+  //regValidate,
+  regValidate.checkEditData,
+  utilities.handleErrors(accountController.updatePassword)
+)
 // Route to logout of account
 router.get("/logout", utilities.handleErrors(accountController.logoutOfAccount))
 
