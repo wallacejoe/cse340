@@ -129,6 +129,25 @@ validate.editAccountRules = () => {
   }
 }
 
+/*  **********************************
+ *  Registration Data Validation Rules
+ * ********************************* */
+validate.editPasswordRules = () => {
+  return [
+    // password is required and must be strong password
+    body("account_password")
+      .trim()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password does not meet requirements."),
+  ]
+}
+
 /* ******************************
  * Check data and return errors or continue to registration
  * ***************************** */
@@ -173,7 +192,10 @@ validate.checkLogData = async (req, res, next) => {
  * Check data and return errors or continue to registration
  * ***************************** */
  validate.checkEditData = async (req, res, next) => {
-  const { account_firstname, account_lastname, account_email, account_id } = req.body
+  const { account_id } = req.body
+  const accountData = await accountModel.getAccountById(account_id)
+  console.log(accountData)
+
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -182,9 +204,9 @@ validate.checkLogData = async (req, res, next) => {
       errors,
       title: "Edit Account",
       nav,
-      account_firstname,
-      account_lastname,
-      account_email,
+      account_firstname: accountData.account_firstname,
+      account_lastname: accountData.account_lastname,
+      account_email: accountData.account_email,
       account_id
     })
     return

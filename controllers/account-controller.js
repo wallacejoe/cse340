@@ -173,7 +173,48 @@ async function updateAccount(req, res) {
  * ************************************ */
 async function updatePassword(req, res) {
   let nav = await utilities.getNav()
- }
+  const { account_password, account_id } = req.body
+  const accountData = accountModel.getAccountById(account_id)
+  
+  // Hash the password before storing
+  let hashedPassword
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    req.flash("notice", 'Sorry, there was an error processing the update.')
+    res.status(501).render("./account/edit-account", {
+      title: "Edit Account",
+      nav,
+      account_firstname: accountData.account_firstname,
+      account_lastname: accountData.account_lastname,
+      account_email: accountData.account_email,
+      account_id,
+      errors: null,
+    })
+  }
+
+    const updateResult = await accountModel.updatePassword(hashedPassword, account_id)
+  
+    if (updateResult) {
+      req.flash(
+        "notice",
+        `Congratulations, password successfuly updated.`
+      )
+      res.redirect("/inv/")
+    } else {
+      req.flash("notice", "Sorry, the update failed.")
+      res.status(501).render("./account/edit-account", {
+        title: "Edit Account",
+        nav,
+        account_firstname: accountData.account_firstname,
+        account_lastname: accountData.account_lastname,
+        account_email: accountData.account_email,
+        account_id,
+        errors: null,
+      })
+    }
+  }
 
 /* ****************************************
  * Logs the user out of there account and returns them to the home page

@@ -106,56 +106,6 @@ Util.buildInventoryOptions = async function(selectedOption){
   return options
 }
 
-/*Util.buildInventoryOptions = async function(){
-  let data = await invModel.getClassifications()
-  let options
-  data.rows.forEach(classification => { 
-    options += "<option value=\"" + classification.classification_id + "\">" + classification.classification_name + "</option>"
-  })
-  return options
-}*/
-
-/* ************************
- * Constructs the dropdown HTML list
- ************************** */
-/*Util.buildInventoryOptions = async function (req, res, next) {
-  let data = await invModel.getClassifications()
-  let list = "<select name='classification_id' class='classification-options'>"
-  data.rows.forEach((row) => {
-    list +=
-      '<option value="' + row.classification_id +
-      '">' +
-      row.classification_name +
-      "</option>"
-  })
-  list += "</select>"
-  return list
-}*/
-
-/*Util.buildInventoryPage = async function(){
-  let options
-    options += '<form action="/inv/addInventory" method="post">'
-      options += '<fieldset>'
-        options += '<p>All fields are required.</p>'
-        options += '<legend>Add Vehicle</legend>'
-        options += '<label class="top">Select Classification:<select type="class" name="classification_id" required value="<%= locals.classification_id %>">'
-          options += this.buildInventoryOptions()
-        options += '</select></label>'
-        options += '<label class="top">Make:<input type="text" name="inv_make" pattern=".{3,}$" required value="<%= locals.inv_make %>"></label>'
-        options += '<label class="top">Model:<input type="text" name="inv_model" pattern=".{3,}$" required value="<%= locals.inv_model %>"></label>'
-        options += '<label class="description">Description:<textarea type="text" name="inv_description" required value="<%= locals.inv_description %>"></textarea></label>'
-        options += '<label class="top">Image Path:<input type="text" name="inv_image" required value="\images\vehicles\no-image.png"></label>'
-        options += '<label class="top">Thumbnail Path:<input type="text" name="inv_thumbnail" required value="\images\vehicles\no-image-tn.png"></label>'
-        options += '<label class="top">Price:<input type="text" name="inv_price" pattern="[0-9]+" placeholder="decimal or integer" required value="<%= locals.inv_price %>"></label>'
-        options += '<label class="top">Year:<input type="text" name="inv_year" pattern="[0-9]{4}$" placeholder="4-digit year" required value="<%= locals.inv_year %>"></label>'
-        options += '<label class="top">Miles:<input type="text" name="inv_miles" placeholder="digits only" pattern="[0-9]+" required value="<%= locals.inv_miles %>"></label>'
-        options += '<label class="top">Color:<input type="text" name="inv_color" required value="<%= locals.inv_color %>"></label>'
-        options += '<input class="submitBtn" type="submit" name="submitf" value="Add Vehicle">'
-      options += '</fieldset>'
-    options += '</form>'
-  return options
-}*/
-
 /* ****************************************
 * Middleware to check token validity
 **************************************** */

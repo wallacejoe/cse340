@@ -44,7 +44,7 @@ router.post(
 // Process update password attempt
 router.post(
   "/update/password",
-  //regValidate,
+  regValidate.editPasswordRules(),
   regValidate.checkEditData,
   utilities.handleErrors(accountController.updatePassword)
 )
