@@ -153,7 +153,7 @@ async function updateAccount(req, res) {
       "notice",
       `Successfully updated your information.`
     )
-    res.redirect("/inv/")
+    res.redirect("/account/")
   } else {
     req.flash("notice", "Sorry, the update failed.")
     res.status(501).render("./account/edit-account", {

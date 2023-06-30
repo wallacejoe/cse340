@@ -159,9 +159,7 @@ Util.checkAccountType = (req, res, next) => {
     if (accountType == "Employee" || accountType == "Admin") {
       next()
     } else {
-      const error = new Error("Access denied")
-      error.status = 403
-      next(error)
+      res.redirect("/")
     }
   } else {
     const error = new Error("Not authenticated")
