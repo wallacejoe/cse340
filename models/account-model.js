@@ -93,4 +93,17 @@ async function getAccountById(account_id) {
   }
 }
 
-  module.exports = { registerAccount, checkNewEmail, checkExistingEmail, checkExistingPassword, getAccountByEmail, getAccountById, updateAccount, updatePassword }
+/* *****************************
+*  Get the number of unread messages
+* *************************** */
+async function getNumUnread(account_id) {
+  try {
+    const sql = "SELECT * FROM public.messages WHERE message_to = $1 AND message_read = false"
+    const data = await pool.query(sql, [account_id])
+    return data.rowCount
+  } catch (error) {
+    new Error("Number of unread messages error")
+  }
+}
+
+  module.exports = { registerAccount, checkNewEmail, checkExistingEmail, checkExistingPassword, getAccountByEmail, getAccountById, updateAccount, updatePassword, getNumUnread }

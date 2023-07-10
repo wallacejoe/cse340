@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model")
 const accountModel = require("../models/account-model")
+const messageModel = require("../models/message-model")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 const Util = {}
@@ -106,6 +107,60 @@ Util.buildInventoryOptions = async function(selectedOption){
   return options
 }
 
+/* **************************************
+* Build the list of message recipients
+* ************************************ */
+Util.buildMessageOptions = async function(selectedOption){
+  let data = await messageModel.getAccounts()
+  let options = "<select id=\"accountList\" name=\"message_to\">"
+  options += "<option value=\"#\">Select a Recipient</option>"
+  data.rows.forEach(account => { 
+    options += `<option value="${account.account_id}"
+    ${account.account_id === Number(selectedOption)? "selected":""}>
+    ${account.account_firstname} ${account.account_lastname}</option>`
+  })
+  options += "</select>"
+  return options
+}
+
+/* **************************************
+* Build the messages inbox
+* ************************************ */
+Util.buildMessageTable = async function(data){
+  let table = '<table id="inbox-table">';
+  if(data.length > 0){
+    table += '<thead>';
+    table += '<tr><th>Received</th><td class="bolder">Subject</td><td class="bolder">From</td><td class="bolder">Read</td></tr>';
+    table += '</thead>';
+    table += '<tbody>';
+    data.forEach(message => {
+      table += `<tr><td>${message.message_created.toLocaleDateString()}</td>`;
+      //table += `<td>${message.message_subject}</td>`;
+      table += '<td><a href="../../message/detail/'+ message.message_id 
+      + '" title="View ' + message.message_subject + '">' + message.message_subject + '</a></td>';
+      table += `<td>${message.message_from}</td>`;
+      table += `<td>${message.message_read}</td></tr>`;
+    })
+    table += '</tbody>';
+  } else { 
+    table += '<p class="notice">No messages were found.</p>';
+  }
+  table += '</table>'
+  return table
+}
+
+/* **************************************
+* Build the message view
+* ************************************ */
+Util.buildMessage = async function(data){
+  let message = '<div class="message-options">';
+  message += `<p><span class="bolder">Subject:</span> ${data[0].message_subject}</p>`;
+  message += `<p><span class="bolder">From:</span> ${data[0].message_from}</p>`;
+  message += `<p><span class="bolder">Message:</span> ${data[0].message_body}</p>`;
+  message += '</div>';
+  return message
+}
+
 /* ****************************************
 * Middleware to check token validity
 **************************************** */
@@ -169,8 +224,7 @@ Util.checkAccountType = (req, res, next) => {
 }
 
 Util.checkEmailChange = async (account_email, account_id) => {
-  const emailExists = await accountModel.checkNewEmail(account_email, account_id)
-  return emailExists
+  return await accountModel.checkNewEmail(account_email, account_id)
 }
 
 /* ****************************************

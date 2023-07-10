@@ -33,10 +33,13 @@ async function buildRegister(req, res, next) {
 *  Deliver account view
 * *************************************** */
 async function buildAccount(req, res, next) {
+  const data = res.locals.accountData
   let nav = await utilities.getNav()
+  let unread = accountModel.getNumUnread(data.account_id)
   res.render("./account/account", {
       title: "Account Management",
       nav,
+      unread,
       errors: null,
   })
 }
