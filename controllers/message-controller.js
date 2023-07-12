@@ -89,9 +89,6 @@ async function buildByMessageId(req, res, next) {
     title: messageName,
     nav,
     message,
-    message_body: data[0].message_body,
-    message_subject: data[0].message_subject,
-    message_from: data[0].message_from,
     message_id: data[0].message_id,
     message_read: data[0].message_read,
     errors: null,
@@ -233,15 +230,16 @@ async function markAsUnread(req, res) {
 * *************************************** */
 async function buildReplyToMessage(req, res, next) {
   const data = res.locals.accountData
-  const { message_from, message_body, message_subject } = req.body
+  const { message_id } = req.body
+  let messageData = await messageModel.getMessageById(message_id)
   let nav = await utilities.getNav();
-  let options = await utilities.getRecipient(message_from);
+  let options = await utilities.getRecipient(messageData[0].message_from);
   res.render("./message/reply-to-message", {
     title: "Reply Message",
     nav,
     options,
-    message_subject: message_subject,
-    message_body: "//////// " + message_body + " ////////",
+    message_subject: messageData[0].message_subject,
+    message_body: "//////// " + messageData[0].message_body + " ////////",
     account_id: data.account_id,
     errors: null,
   });
@@ -258,16 +256,19 @@ async function replyToMessage(req, res) {
   if (messageResult) {
     req.flash(
       "notice",
-      `Message sent.`
+      `Reply sent.`
     )
     res.redirect("/message/")
   } else {
     const options = await utilities.buildMessageOptions(message_to)
     req.flash("notice", "Sorry, the message was not successfully sent.")
-    res.status(501).render("./message/create-message", {
-      title: "New Message",
+    res.status(501).render("./message/reply-to-message", {
+      title: "Reply Message",
       nav,
       options,
+      message_subject: message_subject,
+      message_body: message_body,
+      account_id: account_id,
       errors: null,
     })
   }

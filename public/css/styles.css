@@ -355,6 +355,10 @@ form label.top input:required:valid, form label.description textarea:required:va
   padding-left: 1em;
 }
 
+.tableNotice {
+  margin-left: 1em;
+}
+
 /*Message Styles*/
 .message-options {
   margin-left: 2.5em;

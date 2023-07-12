@@ -127,7 +127,7 @@ Util.buildMessageOptions = async function(selectedOption){
 * Find the recipient of the reply message
 * ************************************ */
 Util.getRecipient = async function(selectedOption){
-  let data = await accountModel.getAccountById(selectedOption)
+  const data = await accountModel.getAccountById(selectedOption)
   let options = "<select id=\"accountList\" name=\"message_to\">"
   options += `<option value=\"${data.account_id}\">${data.account_firstname} ${data.account_lastname}</option>`
   options += "</select>"
@@ -138,25 +138,27 @@ Util.getRecipient = async function(selectedOption){
 * Build the messages inbox
 * ************************************ */
 Util.buildMessageTable = async function(data){
-  let table = '<table id="inbox-table">';
+  let table = ""
   if(data.length > 0){
+    table += '<table id="inbox-table">';
     table += '<thead>';
     table += '<tr><th>Received</th><td class="bolder">Subject</td><td class="bolder">From</td><td class="bolder">Read</td></tr>';
     table += '</thead>';
     table += '<tbody>';
-    data.forEach(message => {
+    //data.forEach( async (message) => { -This code does not work in cunjunction with an await command
+    for (const message of data) {
+      let from = await accountModel.getAccountById(message.message_from);
       table += `<tr><td>${message.message_created.toLocaleDateString()}</td>`;
-      //table += `<td>${message.message_subject}</td>`;
       table += '<td><a href="../../message/detail/'+ message.message_id 
       + '" title="View ' + message.message_subject + '">' + message.message_subject + '</a></td>';
-      table += `<td>${message.message_from}</td>`;
+      table += `<td>${from.account_firstname} ${from.account_lastname}</td>`;
       table += `<td>${message.message_read}</td></tr>`;
-    })
+    }
     table += '</tbody>';
+    table += '</table>'
   } else { 
-    table += '<p class="notice">No messages were found.</p>';
+    table += '<p class="tableNotice">No messages were found.</p>';
   }
-  table += '</table>'
   return table
 }
 

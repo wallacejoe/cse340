@@ -40,7 +40,7 @@ router.get(
 // Route to build message by message id
 router.get(
     "/detail/:messageId",
-    utilities.checkAccountType,
+    utilities.checkLogin,
     utilities.handleErrors(messageController.buildByMessageId));
 
 // Route to reply to a message

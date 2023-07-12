@@ -23,7 +23,7 @@ validate.messageRules = () => {
             .trim()
             .isLength({
                 min: 3,
-                max: 100,
+                max: 10000,
             })
             .withMessage("Please include a message."),
     ]
