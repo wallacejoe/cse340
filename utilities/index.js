@@ -124,6 +124,17 @@ Util.buildMessageOptions = async function(selectedOption){
 }
 
 /* **************************************
+* Find the recipient of the reply message
+* ************************************ */
+Util.getRecipient = async function(selectedOption){
+  let data = await accountModel.getAccountById(selectedOption)
+  let options = "<select id=\"accountList\" name=\"message_to\">"
+  options += `<option value=\"${data.account_id}\">${data.account_firstname} ${data.account_lastname}</option>`
+  options += "</select>"
+  return options
+}
+
+/* **************************************
 * Build the messages inbox
 * ************************************ */
 Util.buildMessageTable = async function(data){
@@ -153,9 +164,10 @@ Util.buildMessageTable = async function(data){
 * Build the message view
 * ************************************ */
 Util.buildMessage = async function(data){
+  let from = await accountModel.getAccountById(data[0].message_from)
   let message = '<div class="message-options">';
   message += `<p><span class="bolder">Subject:</span> ${data[0].message_subject}</p>`;
-  message += `<p><span class="bolder">From:</span> ${data[0].message_from}</p>`;
+  message += `<p><span class="bolder">From:</span> ${from.account_firstname} ${from.account_lastname}</p>`;
   message += `<p><span class="bolder">Message:</span> ${data[0].message_body}</p>`;
   message += '</div>';
   return message

@@ -89,6 +89,9 @@ async function buildByMessageId(req, res, next) {
     title: messageName,
     nav,
     message,
+    message_body: data[0].message_body,
+    message_subject: data[0].message_subject,
+    message_from: data[0].message_from,
     message_id: data[0].message_id,
     message_read: data[0].message_read,
     errors: null,
@@ -230,13 +233,15 @@ async function markAsUnread(req, res) {
 * *************************************** */
 async function buildReplyToMessage(req, res, next) {
   const data = res.locals.accountData
-  const { message_id } = req.body
+  const { message_from, message_body, message_subject } = req.body
   let nav = await utilities.getNav();
-  let options = await utilities.getRecipient(message_id);
+  let options = await utilities.getRecipient(message_from);
   res.render("./message/reply-to-message", {
     title: "Reply Message",
     nav,
     options,
+    message_subject: message_subject,
+    message_body: "//////// " + message_body + " ////////",
     account_id: data.account_id,
     errors: null,
   });

@@ -23,7 +23,9 @@
     <a href="/message/">Return to inbox</a>
     <div class="forms-flex">
     <form class="messageForm" action="/message/reply" method="post">
-        <input type="hidden" name="message_id" value="<%= locals.message_id %>">
+        <input type="hidden" name="message_body" value="<%= locals.message_body %>">
+        <input type="hidden" name="message_subject" value="<%= locals.message_subject %>">
+        <input type="hidden" name="message_from" value="<%= locals.message_from %>">
         <input class="submitBtn" type="submit" name="submitf" value="Reply">
     </form>
     <% if (!locals.message_read) { %>

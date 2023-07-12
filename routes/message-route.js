@@ -2,6 +2,7 @@
 const express = require("express")
 const router = new express.Router() 
 const messageController = require("../controllers/message-controller")
+const messageValidate = require('../utilities/message-validation')
 const utilities = require("../utilities/")
 
 // Inbox route
@@ -26,6 +27,8 @@ router.get(
 router.post(
     "/createMessage",
     utilities.checkLogin,
+    messageValidate.messageRules(),
+    messageValidate.checkMessageData,
     utilities.handleErrors(messageController.createMessage))
 
 // Message archive route
@@ -45,6 +48,14 @@ router.post(
     "/reply",
     utilities.handleErrors(messageController.buildReplyToMessage)
     )
+
+// Process reply message
+router.post(
+    "/replyMessage",
+    messageValidate.messageRules(),
+    messageValidate.checkMessageData,
+    utilities.handleErrors(messageController.createMessage)
+)
 
 // Route to mark a message as read
 router.post(
